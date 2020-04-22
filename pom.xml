@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>IoTExtension</groupId>
+  <artifactId>IoT-AwareExtension</artifactId>
+  <version>0.0.1</version>
+  <packaging>jar</packaging>
+  <name>IoT-Aware Extension for Flowable Engine</name>
+  
+  <dependencies>
+  <dependency>
+    <groupId>org.flowable.designer</groupId>
+    <artifactId>org.flowable.designer.integration</artifactId>
+    <version>5.22.0</version>
+    <scope>compile</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.flowable</groupId>
+    <artifactId>flowable-engine</artifactId>
+    <version>6.5.0</version>
+  </dependency>
+</dependencies>
+<build>
+<pluginManagement>
+  <plugins>
+    <plugin>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <configuration>
+        <source>1.8</source>
+        <target>1.8</target>
+        <showDeprecation>true</showDeprecation>
+        <showWarnings>true</showWarnings>
+        <optimize>true</optimize>
+      </configuration>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-jar-plugin</artifactId>
+      <version>2.3.2</version>
+      <configuration>
+        <archive>
+          <index>true</index>
+          <manifest>
+            <addClasspath>false</addClasspath>
+            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+          </manifest>
+          <manifestEntries>
+            <FlowableDesigner-Extension-Name>Acme Money</FlowableDesigner-Extension-Name>
+          </manifestEntries>
+        </archive>
+      </configuration>
+    </plugin>
+  </plugins>
+  </pluginManagement>
+</build>
+</project>
