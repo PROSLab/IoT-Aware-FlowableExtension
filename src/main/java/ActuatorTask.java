@@ -11,19 +11,19 @@ import org.activiti.designer.integration.annotation.Runtime;
  */
 @Runtime(javaDelegateClass = "org.acme.runtime.AcmeMoneyJavaDelegation")
 @Help(displayHelpShort = "Creates a new account", displayHelpLong =
-    "Creates a new account using the account number specified")
+    "Define the response for the actuation")
 public class ActuatorTask extends AbstractCustomServiceTask {
 
   private static final String HELP_ACCOUNT_NUMBER_LONG =
       "Provide a number that is suitable as an account number.";
 
-  @Property(type = PropertyType.TEXT, displayName = "Account Number", required = true)
+  @Property(type = PropertyType.TEXT, displayName = "Device Name", required = true)
   @Help(displayHelpShort = "Provide an account number", displayHelpLong = HELP_ACCOUNT_NUMBER_LONG)
   private String accountNumber;
 
-  @Property(type = PropertyType.MULTILINE_TEXT, displayName = "Comments")
-  @Help(displayHelpShort = "Provide comments", displayHelpLong =
-      "You can add comments to the node to provide a brief description.")
+  @Property(type = PropertyType.MULTILINE_TEXT, displayName = "Response", required = true)
+  @Help(displayHelpShort = "Provide response", displayHelpLong =
+      "Add the response for the actuation")
   private String comments;
 
   @Override

@@ -39,22 +39,22 @@ public class PhysicalEntity extends AbstractCustomServiceTask {
 
   @Override
   public DiagramBaseShape getDiagramBaseShape() {
-	  return DiagramBaseShape.EVENT;
+	  return DiagramBaseShape.ACTIVITY;
   }
 
   @Override
   public String getSmallIconPath() {
-    return "";
+    return "icons/physicalEntity.png";
   }
   
   @Override
   public String getShapeIconPath() {
-    return "";
+    return "icons/physicalEntity.png";
   }
   
   @Override
   public String getLargeIconPath() {
-    return "";
+    return "icons/physicalEntity.png";
   }
  
 }

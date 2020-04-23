@@ -17,9 +17,17 @@ public class SensorTask extends AbstractCustomServiceTask {
   private static final String HELP_ACCOUNT_NUMBER_LONG =
       "Provide a number that is suitable as an account number.";
 
-  @Property(type = PropertyType.TEXT, displayName = "Account Number", required = true)
+  @Property(type = PropertyType.TEXT, displayName = "Device Name", required = true)
   @Help(displayHelpShort = "Provide an account number", displayHelpLong = HELP_ACCOUNT_NUMBER_LONG)
-  private String accountNumber;
+  private String sensorName;
+  
+  @Property(type = PropertyType.TEXT, displayName = "Device Source", required = true)
+  @Help(displayHelpShort = "Provide an account number", displayHelpLong = HELP_ACCOUNT_NUMBER_LONG)
+  private String sensorSource;
+  
+  @Property(type = PropertyType.TEXT, displayName = "Device Position")
+  @Help(displayHelpShort = "Provide an account number", displayHelpLong = HELP_ACCOUNT_NUMBER_LONG)
+  private String sensorGeolocalization;
 
   @Property(type = PropertyType.MULTILINE_TEXT, displayName = "Comments")
   @Help(displayHelpShort = "Provide comments", displayHelpLong =
