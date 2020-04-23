@@ -28,16 +28,26 @@ public class SensorTask extends AbstractCustomServiceTask {
 
   @Override
   public String contributeToPaletteDrawer() {
-    return "Acme Corporation";
+    return "IoT-Aware Extensions";
   }
 
   @Override
   public String getName() {
-    return "Money node";
+    return "Sensor Task ";
   }
 
   @Override
   public String getSmallIconPath() {
-    return "icons/coins.png";
+    return "icons/sensor.png";
+  }
+  
+  @Override
+  public String getShapeIconPath() {
+    return "icons/sensor.png";
+  }
+  
+  @Override
+  public String getLargeIconPath() {
+    return "icons/sensor.png";
   }
 }
