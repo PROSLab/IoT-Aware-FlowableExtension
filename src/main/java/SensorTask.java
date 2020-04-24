@@ -9,30 +9,22 @@ import org.activiti.designer.integration.annotation.Runtime;
  * @version 1
  * @since 1.0.0
  */
-@Runtime(javaDelegateClass = "org.acme.runtime.AcmeMoneyJavaDelegation")
-@Help(displayHelpShort = "Creates a new account", displayHelpLong =
-    "Creates a new account using the account number specified")
+@Runtime(javaDelegateClass = "delegateClasses.sensorDelegate")
+@Help(displayHelpShort = "This is the sensor task", displayHelpLong =
+    "Define the parameters for receive data from a sensor")
 public class SensorTask extends AbstractCustomServiceTask {
 
-  private static final String HELP_ACCOUNT_NUMBER_LONG =
-      "Provide a number that is suitable as an account number.";
-
   @Property(type = PropertyType.TEXT, displayName = "Device Name", required = true)
-  @Help(displayHelpShort = "Provide an account number", displayHelpLong = HELP_ACCOUNT_NUMBER_LONG)
+  @Help(displayHelpShort = "Provide the name of the device", displayHelpLong = "Insert the name of device")
   private String sensorName;
   
   @Property(type = PropertyType.TEXT, displayName = "Device Source", required = true)
-  @Help(displayHelpShort = "Provide an account number", displayHelpLong = HELP_ACCOUNT_NUMBER_LONG)
+  @Help(displayHelpShort = "Provide a source of the device's data", displayHelpLong = "Insert the device source")
   private String sensorSource;
   
   @Property(type = PropertyType.TEXT, displayName = "Device Position")
-  @Help(displayHelpShort = "Provide an account number", displayHelpLong = HELP_ACCOUNT_NUMBER_LONG)
+  @Help(displayHelpShort = "Provide a position of the device", displayHelpLong = "Insert the device location")
   private String sensorGeolocalization;
-
-  @Property(type = PropertyType.MULTILINE_TEXT, displayName = "Comments")
-  @Help(displayHelpShort = "Provide comments", displayHelpLong =
-      "You can add comments to the node to provide a brief description.")
-  private String comments;
 
   @Override
   public String contributeToPaletteDrawer() {

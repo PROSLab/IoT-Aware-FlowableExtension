@@ -9,22 +9,22 @@ import org.activiti.designer.integration.annotation.Runtime;
  * @version 1
  * @since 1.0.0
  */
-@Runtime(javaDelegateClass = "org.acme.runtime.AcmeMoneyJavaDelegation")
-@Help(displayHelpShort = "Creates a new account", displayHelpLong =
-    "Define the response for the actuation")
+@Runtime(javaDelegateClass = "delegateClasses.actuatorDelegate")
+@Help(displayHelpShort = "This is the actuator task", displayHelpLong =
+    "Define the parameters for the actuation")
 public class ActuatorTask extends AbstractCustomServiceTask {
 
-  private static final String HELP_ACCOUNT_NUMBER_LONG =
-      "Provide a number that is suitable as an account number.";
-
   @Property(type = PropertyType.TEXT, displayName = "Device Name", required = true)
-  @Help(displayHelpShort = "Provide an account number", displayHelpLong = HELP_ACCOUNT_NUMBER_LONG)
-  private String accountNumber;
+  @Help(displayHelpShort = "Provide the name of the device", displayHelpLong = "Insert the name of device")
+  private String actuatorName;
 
+  @Property(type = PropertyType.TEXT, displayName = "Device Position")
+  @Help(displayHelpShort = "Provide a position of the device", displayHelpLong = "Insert the device location")
+  private String actuatorGeolocalization;
+  
   @Property(type = PropertyType.MULTILINE_TEXT, displayName = "Response", required = true)
-  @Help(displayHelpShort = "Provide response", displayHelpLong =
-      "Add the response for the actuation")
-  private String comments;
+  @Help(displayHelpShort = "Provide response for the device ${actuatorName}", displayHelpLong ="Add the response for the actuation")
+  private String response;
 
   @Override
   public String contributeToPaletteDrawer() {
