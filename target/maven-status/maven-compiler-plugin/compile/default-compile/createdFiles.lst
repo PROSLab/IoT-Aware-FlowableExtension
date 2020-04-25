@@ -1,4 +1,8 @@
+delegateClasses\physicalEntityDelegate.class
 ActuatorTask.class
 IoTAwareMessageFlow.class
 SensorTask.class
+delegateClasses\messageFlowDelegate.class
+delegateClasses\sensorDelegate.class
 PhysicalEntity.class
+delegateClasses\actuatorDelegate.class

@@ -44,7 +44,7 @@
             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
           </manifest>
           <manifestEntries>
-            <FlowableDesigner-Extension-Name>Acme Money</FlowableDesigner-Extension-Name>
+            <FlowableDesigner-Extension-Name>IoT Aware extension</FlowableDesigner-Extension-Name>
           </manifestEntries>
         </archive>
       </configuration>

@@ -16,15 +16,15 @@ public class SensorTask extends AbstractCustomServiceTask {
 
   @Property(type = PropertyType.TEXT, displayName = "Device Name", required = true)
   @Help(displayHelpShort = "Provide the name of the device", displayHelpLong = "Insert the name of device")
-  private String sensorName;
+  public String sensorName;
   
   @Property(type = PropertyType.TEXT, displayName = "Device Source", required = true)
   @Help(displayHelpShort = "Provide a source of the device's data", displayHelpLong = "Insert the device source")
-  private String sensorSource;
+  public String sensorSource;
   
   @Property(type = PropertyType.TEXT, displayName = "Device Position")
   @Help(displayHelpShort = "Provide a position of the device", displayHelpLong = "Insert the device location")
-  private String sensorGeolocalization;
+  public String sensorGeolocalization;
 
   @Override
   public String contributeToPaletteDrawer() {
