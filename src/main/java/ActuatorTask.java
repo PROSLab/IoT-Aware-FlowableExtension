@@ -22,8 +22,12 @@ public class ActuatorTask extends AbstractCustomServiceTask {
   @Help(displayHelpShort = "Provide a position of the device", displayHelpLong = "Insert the device location")
   private String actuatorGeolocalization;
   
+  @Property(type = PropertyType.MULTILINE_TEXT, displayName = "Response type", required = true)
+  @Help(displayHelpShort = "Provide response for the device ", displayHelpLong ="Add the response type for the actuation")
+  private String responseTyped;
+  
   @Property(type = PropertyType.MULTILINE_TEXT, displayName = "Response", required = true)
-  @Help(displayHelpShort = "Provide response for the device ${actuatorName}", displayHelpLong ="Add the response for the actuation")
+  @Help(displayHelpShort = "Provide response for the device ", displayHelpLong ="Add the response for the actuation")
   private String response;
 
   @Override
