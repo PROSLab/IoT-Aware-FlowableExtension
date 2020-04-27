@@ -1,5 +1,6 @@
 import org.activiti.designer.integration.annotation.Help;
 import org.activiti.designer.integration.annotation.Property;
+import org.activiti.designer.integration.annotation.PropertyItems;
 import org.activiti.designer.integration.servicetask.AbstractCustomServiceTask;
 import org.activiti.designer.integration.servicetask.PropertyType;
 import org.activiti.designer.integration.annotation.Runtime;
@@ -14,22 +15,25 @@ import org.activiti.designer.integration.annotation.Runtime;
     "Define the parameters for the actuation")
 public class ActuatorTask extends AbstractCustomServiceTask {
 
-  @Property(type = PropertyType.TEXT, displayName = "Device Name", required = true)
+  private static final String MQTT = null;
+  private static final String HTTP = null;
+
+@Property(type = PropertyType.TEXT, displayName = "Device Name", required = true)
   @Help(displayHelpShort = "Provide the name of the device", displayHelpLong = "Insert the name of device")
   private String actuatorName;
-
-  @Property(type = PropertyType.TEXT, displayName = "Device Position")
-  @Help(displayHelpShort = "Provide a position of the device", displayHelpLong = "Insert the device location")
-  private String actuatorGeolocalization;
   
-  @Property(type = PropertyType.MULTILINE_TEXT, displayName = "Response type", required = true)
-  @Help(displayHelpShort = "Provide response for the device ", displayHelpLong ="Add the response type for the actuation")
+  @Property(type = PropertyType.TEXT, displayName = "Response type", required = true)
+  @Help(displayHelpShort = "Provide response type for the device ", displayHelpLong ="Add the response type for the actuation")
   private String responseTyped;
-  
-  @Property(type = PropertyType.MULTILINE_TEXT, displayName = "Response", required = true)
-  @Help(displayHelpShort = "Provide response for the device ", displayHelpLong ="Add the response for the actuation")
-  private String response;
 
+  @Property(type = PropertyType.TEXT, displayName = "Response source", required = true)
+  @Help(displayHelpShort = "Provide a target source for the device ", displayHelpLong ="Add the response for the actuation")
+  private String targetSource;
+  
+  @Property(type = PropertyType.MULTILINE_TEXT, displayName = "Content of Response (in JSON)", required = true)
+  @Help(displayHelpShort = "Provide response for the device ", displayHelpLong ="Add the response for the actuation")
+  private String responseString;
+  
   @Override
   public String contributeToPaletteDrawer() {
     return "IoT-Aware Extensions";

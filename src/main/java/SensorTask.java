@@ -18,13 +18,15 @@ public class SensorTask extends AbstractCustomServiceTask {
   @Help(displayHelpShort = "Provide the name of the device", displayHelpLong = "Insert the name of device")
   public String sensorName;
   
+  @Property(type = PropertyType.TEXT, displayName = "Device Communication Protocol", required = true)
+  @Help(displayHelpShort = "Provide the type of source of the device", displayHelpLong = "Insert the device type source (HTTP,MQTT,Bluetooth)")
+  public String sensorSourceType;
+  
   @Property(type = PropertyType.TEXT, displayName = "Device Source", required = true)
   @Help(displayHelpShort = "Provide a source of the device's data", displayHelpLong = "Insert the device source")
   public String sensorSource;
   
-  @Property(type = PropertyType.TEXT, displayName = "Device Position")
-  @Help(displayHelpShort = "Provide a position of the device", displayHelpLong = "Insert the device location")
-  public String sensorGeolocalization;
+
 
   @Override
   public String contributeToPaletteDrawer() {
