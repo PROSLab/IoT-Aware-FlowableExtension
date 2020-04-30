@@ -97,6 +97,11 @@ public class sensorDelegate implements JavaDelegate {
 	        variables.put("Humidity", hum);
 	        variables.put("LED", led);
 	        
+	        execution.setVariable("Temperature", temp);
+	        execution.setVariable("Humidity", hum);
+	        execution.setVariable("LED", led);
+	        //execution.setVariable(, temp);
+	        
 	        System.out.println("The temperature source is: "+ temp+ "\n The Humidity value is:"+hum+"\n The LED status is:"+led);				
 			
 			}

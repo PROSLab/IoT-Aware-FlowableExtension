@@ -91,7 +91,9 @@ public class actuatorDelegate implements JavaDelegate{
 				    buf.write((byte) result2);
 				    result2 = bis.read();
 				}  
-
+			
+			HashMap<String, Object> variables = new HashMap<String, Object>();
+		    variables.put("Response", response);
 	        System.out.println("Setted the "+response);				
 			
 			}
