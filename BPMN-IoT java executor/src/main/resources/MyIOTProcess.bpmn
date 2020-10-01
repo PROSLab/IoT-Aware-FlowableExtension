@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="myIOTProcess" name="My process" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <serviceTask id="servicetask1" name="Start Ventilation" activiti:class="delegateClasses.actuatorDelegate" activiti:extensionId="ActuatorTask">
+      <extensionElements>
+        <activiti:field name="actuatorName">
+          <activiti:string><![CDATA[Ventilator]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="responseTyped">
+          <activiti:string><![CDATA[HTTP]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="targetSource">
+          <activiti:string><![CDATA[https://dweet.io/dweet/for/receiverIOT]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="responseString">
+          <activiti:string><![CDATA[LED=ON]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="servicetask1"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow2" sourceRef="servicetask1" targetRef="exclusivegateway1"></sequenceFlow>
+    <serviceTask id="servicetask2" name="Sensing Data from Gateway" activiti:class="delegateClasses.sensorDelegate" activiti:extensionId="SensorTask">
+      <extensionElements>
+        <activiti:field name="sensorName">
+          <activiti:string><![CDATA[Gateway]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="sensorSourceType">
+          <activiti:string><![CDATA[HTTP]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="sensorSource">
+          <activiti:string><![CDATA[https://dweet.io/get/dweets/for/senderIOT]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow3" sourceRef="exclusivegateway1" targetRef="servicetask2"></sequenceFlow>
+    <businessRuleTask id="businessruletask1" name="Evaluate Environmental Data" activiti:ruleVariablesInput="${gateway}" activiti:rules="Activate, Deactivate, ActivateHIGH, DeactivateHIGH"></businessRuleTask>
+    <sequenceFlow id="flow4" sourceRef="servicetask2" targetRef="businessruletask1"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow5" sourceRef="businessruletask1" targetRef="exclusivegateway2"></sequenceFlow>
+    <serviceTask id="servicetask3" name="Activate Ventilation" activiti:class="delegateClasses.actuatorDelegate" activiti:extensionId="ActuatorTask">
+      <extensionElements>
+        <activiti:field name="actuatorName">
+          <activiti:string><![CDATA[Ventilator]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="responseTyped">
+          <activiti:string><![CDATA[HTTP]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="targetSource">
+          <activiti:string><![CDATA[https://dweet.io/dweet/for/receiverIOT]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="responseString">
+          <activiti:string><![CDATA[LED=ON]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="servicetask4" name="Deactivate Ventilation" activiti:class="delegateClasses.actuatorDelegate" activiti:extensionId="ActuatorTask">
+      <extensionElements>
+        <activiti:field name="actuatorName">
+          <activiti:string><![CDATA[Ventilator]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="responseTyped">
+          <activiti:string><![CDATA[HTTP]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="targetSource">
+          <activiti:string><![CDATA[https://dweet.io/dweet/for/receiverIOT]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="responseString">
+          <activiti:string><![CDATA[LED=OFF]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow6" sourceRef="exclusivegateway2" targetRef="servicetask3">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${gateway.checkVentilationStatus==true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="exclusivegateway2" targetRef="servicetask4">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${gateway.checkVentilationStatus==false}]]></conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway id="exclusivegateway3" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow8" sourceRef="servicetask3" targetRef="exclusivegateway3"></sequenceFlow>
+    <sequenceFlow id="flow9" sourceRef="servicetask4" targetRef="exclusivegateway3"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway4" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow10" sourceRef="exclusivegateway3" targetRef="exclusivegateway4"></sequenceFlow>
+    <sequenceFlow id="flow11" sourceRef="exclusivegateway4" targetRef="exclusivegateway1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${loop == 1}]]></conditionExpression>
+    </sequenceFlow>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow12" sourceRef="exclusivegateway4" targetRef="endevent1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${loop == 0}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_myIOTProcess">
+    <bpmndi:BPMNPlane bpmnElement="myIOTProcess" id="BPMNPlane_myIOTProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="20.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="80.0" y="180.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="210.0" y="187.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask2" id="BPMNShape_servicetask2">
+        <omgdc:Bounds height="58.0" width="105.0" x="280.0" y="133.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="businessruletask1" id="BPMNShape_businessruletask1">
+        <omgdc:Bounds height="58.0" width="105.0" x="420.0" y="133.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="BPMNShape_exclusivegateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="570.0" y="141.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask3" id="BPMNShape_servicetask3">
+        <omgdc:Bounds height="55.0" width="105.0" x="630.0" y="81.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask4" id="BPMNShape_servicetask4">
+        <omgdc:Bounds height="61.0" width="105.0" x="630.0" y="180.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway3" id="BPMNShape_exclusivegateway3">
+        <omgdc:Bounds height="40.0" width="40.0" x="750.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway4" id="BPMNShape_exclusivegateway4">
+        <omgdc:Bounds height="40.0" width="40.0" x="800.0" y="187.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="860.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="55.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="80.0" y="207.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="185.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="210.0" y="207.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="230.0" y="187.0"></omgdi:waypoint>
+        <omgdi:waypoint x="230.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="162.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="385.0" y="162.0"></omgdi:waypoint>
+        <omgdi:waypoint x="420.0" y="162.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="525.0" y="162.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="161.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="590.0" y="141.0"></omgdi:waypoint>
+        <omgdi:waypoint x="590.0" y="107.0"></omgdi:waypoint>
+        <omgdi:waypoint x="630.0" y="108.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="590.0" y="181.0"></omgdi:waypoint>
+        <omgdi:waypoint x="590.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="630.0" y="210.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="735.0" y="108.0"></omgdi:waypoint>
+        <omgdi:waypoint x="769.0" y="108.0"></omgdi:waypoint>
+        <omgdi:waypoint x="770.0" y="140.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="735.0" y="210.0"></omgdi:waypoint>
+        <omgdi:waypoint x="770.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="770.0" y="180.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="790.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="820.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="820.0" y="187.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="820.0" y="227.0"></omgdi:waypoint>
+        <omgdi:waypoint x="819.0" y="270.0"></omgdi:waypoint>
+        <omgdi:waypoint x="229.0" y="270.0"></omgdi:waypoint>
+        <omgdi:waypoint x="230.0" y="227.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="840.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="860.0" y="207.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

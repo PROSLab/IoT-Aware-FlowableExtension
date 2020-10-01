@@ -1,0 +1,36 @@
+package delegateClasses.Gateway
+import delegateClasses.Gateway
+
+dialect "mvel"
+ 
+rule "ActivateHIGH"
+	when
+		$env :Gateway(Temperature > 20 && Humidity > 40)
+	then
+		$env.setventilationStatus(true);
+		System.out.println("Turning ON the ventilation! It's very hot!");
+end
+
+rule "Activate"
+	when
+		$env :Gateway(Temperature > 20 && Humidity > 30 && Humidity < 40)
+	then
+		$env.setventilationStatus(true);
+		System.out.println("Turning ON the ventilation! It's hot!");
+end
+
+rule "Deactivate"
+	when
+		$env :Gateway(Temperature < 20 && Humidity < 30 && Humidity < 40)
+	then
+		$env.setventilationStatus(false);
+		System.out.println("Turning OFF the ventilation! It's cold!");
+end
+
+rule "DeactivateHIGH"
+	when
+		$env :Gateway(Temperature < 20 && Humidity < 30)
+	then
+		$env.setventilationStatus(false);
+		System.out.println("Turning OFF the ventilation! It's very cold!");
+end
