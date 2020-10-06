@@ -21,6 +21,8 @@ import org.flowable.engine.impl.el.FixedValue;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import delegateClasses.Gateway;
+
 public class sensorDelegate implements JavaDelegate {
 	
 	public FixedValue sensorName;
@@ -36,11 +38,8 @@ public class sensorDelegate implements JavaDelegate {
 		try
 		{
 			if(name != null && source != null && sourceType != null) {
-				System.out.println("----------Start to contacting the sensor-------------");
-				System.out.println("The sensor id is: "+ execution.getCurrentActivityId());
-				System.out.println("The sensor name: "+ name);
-				System.out.println("The sensor source type: "+sourceType);
-				System.out.println("The sensor source is: "+ source);				
+				System.out.println("----------Start to contacting the GATEWAY-------------");
+				Thread.sleep(5000);				
 				
 			}
 		}
@@ -55,13 +54,6 @@ public class sensorDelegate implements JavaDelegate {
 			
 		}
 		
-		
-//		FlowElement flowElement = execution.getCurrentFlowElement();
-//		List<FieldExtension> fieldExtensions = ((TaskWithFieldExtensions) flowElement).getFieldExtensions();
-//		
-//		for(int i = 0; i< fieldExtensions.size(); i++) {
-//			System.out.println(+i+") Attribute name:  "+fieldExtensions.get(i).getFieldName());
-//		}
 
 		switch(sourceType) {
 		case "HTTP":
@@ -85,7 +77,7 @@ public class sensorDelegate implements JavaDelegate {
 	        
 	        JSONObject myResponse = new JSONObject(response.toString());       	        
 	        JSONArray result = myResponse.getJSONArray("with"); 
-	        JSONObject jsonObjectItem = result.getJSONObject(result.length()-1);
+	        JSONObject jsonObjectItem = result.getJSONObject(0);
 	        JSONObject jsonObjectTempHum = jsonObjectItem.getJSONObject("content"); 
 	        
 	        float temp = jsonObjectTempHum.getFloat("Temperature");
@@ -96,13 +88,24 @@ public class sensorDelegate implements JavaDelegate {
 	        variables.put("Temperature", temp);
 	        variables.put("Humidity", hum);
 	        variables.put("LED", led);
-	        
+	            
 	        execution.setVariable("Temperature", temp);
 	        execution.setVariable("Humidity", hum);
 	        execution.setVariable("LED", led);
-	        //execution.setVariable(, temp);
 	        
-	        System.out.println("The temperature source is: "+ temp+ "\n The Humidity value is:"+hum+"\n The LED status is:"+led);				
+	        Gateway gateway=new Gateway();
+	        gateway.setTemperature((int) temp);
+	        gateway.setHumidity((int) hum);
+	        gateway.setventilationStatus(true);
+	        execution.setVariable("gateway", gateway);
+			
+			System.out.println("----------Devices parameters:-------------");
+			System.out.println("The sensor id is: "+ execution.getCurrentActivityId());
+			System.out.println("The sensor name: "+ name);
+			System.out.println("The sensor source type: "+sourceType);
+			System.out.println("The sensor source is: "+ source);
+	        System.out.println("The temperature source is: "+ temp+ "\n The Humidity value is:"+hum+"\n The LED status is:"+led);
+	        Thread.sleep(5000);
 			
 			}
 			catch(Exception e){

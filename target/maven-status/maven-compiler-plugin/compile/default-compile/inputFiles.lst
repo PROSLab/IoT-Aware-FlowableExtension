@@ -1,8 +1,5 @@
-C:\Users\Ivan Compagnucci\git\IoT-Aware-FlowableExtension\src\main\java\PhysicalEntity.java
 C:\Users\Ivan Compagnucci\git\IoT-Aware-FlowableExtension\src\main\java\SensorTask.java
 C:\Users\Ivan Compagnucci\git\IoT-Aware-FlowableExtension\src\main\java\ActuatorTask.java
-C:\Users\Ivan Compagnucci\git\IoT-Aware-FlowableExtension\src\main\java\IoTAwareMessageFlow.java
+C:\Users\Ivan Compagnucci\git\IoT-Aware-FlowableExtension\src\main\java\delegateClasses\Gateway.java
 C:\Users\Ivan Compagnucci\git\IoT-Aware-FlowableExtension\src\main\java\delegateClasses\actuatorDelegate.java
-C:\Users\Ivan Compagnucci\git\IoT-Aware-FlowableExtension\src\main\java\delegateClasses\messageFlowDelegate.java
-C:\Users\Ivan Compagnucci\git\IoT-Aware-FlowableExtension\src\main\java\delegateClasses\physicalEntityDelegate.java
 C:\Users\Ivan Compagnucci\git\IoT-Aware-FlowableExtension\src\main\java\delegateClasses\sensorDelegate.java

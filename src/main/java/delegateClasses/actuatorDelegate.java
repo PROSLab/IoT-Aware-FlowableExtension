@@ -39,13 +39,12 @@ public class actuatorDelegate implements JavaDelegate{
 		try
 		{
 			if(name != null && responseType != null && response != null) {
-				System.out.println("----------Start actuating the LED-------------");
-				Thread.sleep(10000);
+				System.out.println("----------Start contacting: "+name+"-------------");
 				System.out.println("The sensor id is: "+ execution.getCurrentActivityId());
 				System.out.println("The actuator name: "+ name);
 				System.out.println("The actuator's response type is: "+ responseType);
 				System.out.println("The actuator's target source is: "+ target);
-				System.out.println("The actuator response is: "+ response);
+				
 			}
 		}
 		catch(Exception m)
@@ -82,7 +81,7 @@ public class actuatorDelegate implements JavaDelegate{
 				osw.write(response);
 				osw.flush();
 				osw.close();
-				os.close();  //don't forget to close the OutputStream
+				os.close();  
 				httpCon.connect();
 				BufferedInputStream bis = new BufferedInputStream(httpCon.getInputStream());
 				ByteArrayOutputStream buf = new ByteArrayOutputStream();
@@ -91,11 +90,13 @@ public class actuatorDelegate implements JavaDelegate{
 				    buf.write((byte) result2);
 				    result2 = bis.read();
 				}  
-			
+			System.out.println("----------Start actuating: "+name+"-------------");	
+			Thread.sleep(25000);
+			System.out.println("The actuator response is: "+ response);
 			HashMap<String, Object> variables = new HashMap<String, Object>();
 		    variables.put("Response", response);
 	        System.out.println("Setted the "+response);				
-			
+	        Thread.sleep(5000);
 			}
 			catch(Exception e){
 				throw new IllegalStateException("Unable to contact " +target);
